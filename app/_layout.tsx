@@ -55,12 +55,9 @@ function RootLayoutNav() {
   return (
     <GluestackUIProvider config={config}>
       <Stack>
+        <Stack.Screen name="users" options={{ headerShown: false }} />
+        <Stack.Screen name="add-user" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="signup" options={{ headerShown: false }} />
-        <Stack.Screen name="forgot-password" options={{ headerShown: false }} />
-        <Stack.Screen name="verify-otp" options={{ headerShown: false }} />
-        <Stack.Screen name="create-password" options={{ headerShown: false }} />
       </Stack>
     </GluestackUIProvider>
   );

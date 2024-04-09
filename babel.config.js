@@ -7,6 +7,7 @@ module.exports = function (api) {
       '@babel/preset-typescript',
     ],
     plugins: [
+      'module:react-native-dotenv',
       // Required for expo-router
       'expo-router/babel',
     ],

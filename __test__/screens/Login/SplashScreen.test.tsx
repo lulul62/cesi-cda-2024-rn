@@ -2,7 +2,7 @@ jest.useFakeTimers();
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { StyledProvider, config } from '@gluestack-ui/themed';
-import SplashScreen from '../../../screens/Login/SplashScreen';
+import SplashScreen from '../../../screens/Users/UsersScreen';
 
 jest.mock('react-native-keyboard-aware-scroll-view', () => {
   const KeyboardAwareScrollView = ({ children }: any) => children;
