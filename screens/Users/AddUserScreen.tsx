@@ -13,7 +13,8 @@ export default function AddUser() {
   }
 
   async function addUser(): void {
-    return await usersService.addUser(user);
+     await usersService.addUser(user)
+     const usersFromStorage: Array<User> = await usersService.getUsersFromAsyncStorage();
   }
 
   return (

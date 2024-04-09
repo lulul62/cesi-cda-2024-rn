@@ -13,7 +13,9 @@ export default function UsersScreen() {
 
   async function getUsers() {
     const users: Array<User> = await usersService.getUsers();
-    setUsers(users);
+    const usersFromStorage: Array<User> = await usersService.getUsersFromAsyncStorage();
+    const mergedUsers = [...users, ...usersFromStorage];
+    setUsers(mergedUsers as Array<User>);
   }
 
   function showUsers() {

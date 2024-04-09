@@ -1,8 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUsers, getUserById } from "../clients/jsonPlaceholder.client";
 import { User } from "../interfaces/User.interface";
-import {customLogger} from "../logger";
+import { customLogger } from "../logger";
 import usersMapper from "../mapper/users.mapper";
+import { handleNewUser, getUsersFromAsyncStorage } from "../providers/asyncStorage.provider";
 
 export default {
   getUsers: async (): Promise<Array<User>> => {
@@ -16,6 +17,16 @@ export default {
       throw new Error(`Error getting users: ${error}`)
     }
   },
+  getUsersFromAsyncStorage: async (): Promise<Array<User>> => {
+    try {
+      customLogger.info("Getting users from async storage");
+      return getUsersFromAsyncStorage();
+    }
+    catch (error) {
+      customLogger.error(`Error getting users from async storage: ${error}`);
+      throw new Error(`Error getting users from async storage: ${error}`)
+    }
+  },
   getUserById: async (id: string): Promise<User> => {
     try {
       customLogger.info(`Getting user by id: ${id}`);
@@ -26,11 +37,10 @@ export default {
       throw new Error(`Error getting user by id: ${error}`)
     }
   },
-   addUser: async (user: User): Promise<void> => {
+  addUser: async (user: User): Promise<void> => {
     try {
-      const stringifiedUser: string = JSON.stringify(user);
-      customLogger.info(`Adding user: ${stringifiedUser}`);
-      return await AsyncStorage.setItem(user.email, stringifiedUser)
+      customLogger.info(`Adding user: ${user.email}`);
+      await handleNewUser(user);
     } catch (error) {
       customLogger.error(`Error while adding user: ${error}`);
       throw new Error(`Error while adding user`)
