@@ -3,7 +3,7 @@ import { getUsers, getUserById } from "../clients/jsonPlaceholder.client";
 import { User } from "../interfaces/User.interface";
 import { customLogger } from "../logger";
 import usersMapper from "../mapper/users.mapper";
-import { handleNewUser, getUsersFromAsyncStorage } from "../providers/asyncStorage.provider";
+import { handleNewUser, getUsersFromAsyncStorage, handleUserDeletion } from "../providers/asyncStorage.provider";
 
 export default {
   getUsers: async (): Promise<Array<User>> => {
@@ -44,6 +44,15 @@ export default {
     } catch (error) {
       customLogger.error(`Error while adding user: ${error}`);
       throw new Error(`Error while adding user`)
+    }
+  },
+  handleUserDeletion: async (name: string): Promise<void> => {
+    try {
+      customLogger.info(`Deleting user: ${name}`);
+      await handleUserDeletion(name);
+    } catch (error) {
+      customLogger.error(`Error while deleting user: ${error}`);
+      throw new Error(`Error while deleting user`)
     }
   }
 }

@@ -19,3 +19,12 @@ export async function getUsersFromAsyncStorage(): Promise<Array<User>> {
     }
     return JSON.parse(users)
   }
+  export async function handleUserDeletion(name: string): Promise<void> {
+     const usersFromStorage = JSON.parse(await AsyncStorage.getItem('users'))
+     const position = usersFromStorage.map(user => user.name).indexOf(name);
+     if(position === -1) {
+       return;
+     }
+     usersFromStorage.splice(position, 1);
+     await AsyncStorage.setItem("users", JSON.stringify(usersFromStorage))
+  }

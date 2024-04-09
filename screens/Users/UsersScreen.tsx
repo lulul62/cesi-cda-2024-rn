@@ -11,11 +11,19 @@ import { Link } from 'expo-router';
 export default function UsersScreen() {
   const [users, setUsers] = useState([]);
 
-  async function getUsers() {
+  async function getUsers(): void {
     const users: Array<User> = await usersService.getUsers();
     const usersFromStorage: Array<User> = await usersService.getUsersFromAsyncStorage();
     const mergedUsers = [...users, ...usersFromStorage];
     setUsers(mergedUsers as Array<User>);
+  }
+
+  async function deleteUser(id: string): void {
+    const position = users.map(user => user.name).indexOf(id);
+    const newUsers = users.map(user => user);
+    newUsers.splice(position, 1);
+    await usersService.handleUserDeletion(id);
+    setUsers(newUsers);
   }
 
   function showUsers() {
@@ -58,6 +66,16 @@ export default function UsersScreen() {
             isFocusVisible={false}
           >
             <ButtonText>See</ButtonText>
+          </Button>
+          <Button
+            size="md"
+            variant="solid"
+            action="primary"
+            isDisabled={false}
+            onPress={() => deleteUser(user.name)}
+            isFocusVisible={false}
+          >
+            <ButtonText>Delete</ButtonText>
           </Button>
         </Card>
       )
